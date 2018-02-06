@@ -10,7 +10,7 @@ shinyUI(pageWithSidebar(
       id = "tabs",
       tabPanel(
         "URL Input",
-        textInput("url", "Target Site", ""),
+        textInput("url", "Target Site", "https://github.com/syknapptic/shinytemplates/blob/master/sample_images/8.png"),
         helpText("Input the homepage URL of target site."),
         actionButton("goButton", "RUN")
       )
@@ -24,7 +24,7 @@ shinyUI(pageWithSidebar(
     uiOutput("image"),
     hr(),
     
-    h3("Content Description:"),
+    h3("Description:"),
     textOutput("res")
     
   )
