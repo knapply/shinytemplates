@@ -1,43 +1,5 @@
 library(shiny)
 
-ui <- fluidPage(
-  titlePanel("Demo"),
-  withMathJax(),       # MathJax is JavaSript library for rendering mathematical notation.
-                       # If equations are desired, you can use LaTeX. Examples below.
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("slide", "Select value from slider",
-                  min = 0, max = 5,
-                  value = 2)
-      ),
-    
-    mainPanel(
-      tags$h2("Slider Input Information"),
-      
-      tags$h4("Input Selected:"),
-      textOutput("input_value"),
-      
-      tags$h4("Input Class:"),
-      textOutput("input_class"),
-      
-      tags$h4("Input Storage Mode:"),
-      textOutput("input_mode"),
-      
-      tags$h4("Input Structure:"),
-      textOutput("input_str"),
-      
-      tags$h2("Operations Using Slider Input"),
-       
-      # LaTeX usage: `"$$ ..your equation.. $$"`
-      tags$h4("$$ \\frac {x_{input}} {2}$$"),
-      textOutput("input_halved"),
-      
-      tags$h4("$$\\sqrt {x_{input}}$$"),
-      textOutput("input_sqrt")
-      )
-    )
-  )
-
 server <- function(input, output) {
   output$input_value <- renderPrint({
     cat(input$slide)                # cat() is an alternative to print(), see: ?cat()
@@ -69,4 +31,45 @@ server <- function(input, output) {
   })
 }
 
+ui <- fluidPage(
+  titlePanel("Demo"),
+  withMathJax(),       # MathJax is JavaSript library for rendering mathematical notation.
+                       # If equations are desired, you can use LaTeX. Examples below.
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slide", "Select value from slider",
+                  min = 0, max = 5,
+                  value = 2)
+      ),
+    
+    mainPanel(
+      tags$h2(tags$strong("How R Sees the Slider's Input")),
+      
+      tags$h4("Input Value:"),
+      textOutput("input_value"),
+      
+      tags$h4("Input Class:"),
+      textOutput("input_class"),       # integer
+      
+      tags$h4("Input Storage Mode:"),
+      textOutput("input_mode"),        # numeric
+      
+      tags$h4("Input Structure:"),
+      textOutput("input_str"),         # int [value of `input$slide`]
+      
+      tags$h2(tags$strong("Results of Operations Performed on Slider Input")),
+       
+      tags$h4("$$ \\frac {x_{input}} {2} $$"),
+      tags$h4(textOutput("input_halved")),
+      
+      tags$h4("$$ \\sqrt {x_{input}} $$"),
+      tags$h4(textOutput("input_sqrt"))
+      )
+    )
+  )
+
+
 shinyApp(ui, server)
+
+
+
